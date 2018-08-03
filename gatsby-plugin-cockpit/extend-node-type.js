@@ -1,4 +1,5 @@
 const { GraphQLJSON } = require('gatsby/graphql');
+const itemsStore = require('./items-store');
 const { singular } = require('pluralize');
 const styler = require('react-styling');
 const sanitizeHtml = require('sanitize-html');
@@ -9,7 +10,9 @@ module.exports = async (
   { type, store, pathPrefix, getNode, cache },
   { cockpitConfig }
 ) => {
-  const { collectionsItems, collectionsNames } = gatsbyNode;
+  const collectionsItems = itemsStore.get('collectionsItems') || [];
+  const collectionsNames = itemsStore.get('collectionsNames') || [];
+
   const singularCollectionNames = collectionsNames.map(name => singular(name));
 
   if (singularCollectionNames.indexOf(type.name) === -1) {

@@ -1,6 +1,7 @@
 const CockpitSDK = require('cockpit-sdk').default;
 const { AssetMapHelpers, CockpitHelpers, CreateNodesHelpers } = require('./helpers');
 const extendNodeType = require('./extend-node-type');
+const itemsStore = require('./items-store');
 
 exports.sourceNodes = async ({
   actions: { createNode },
@@ -24,7 +25,7 @@ exports.sourceNodes = async ({
   });
 
   const cockpitHelpers = new CockpitHelpers(cockpit, config);
-  const collectionNames = await cockpitHelpers.getCollectionNames();
+  const collectionsNames = await cockpitHelpers.getCollectionNames();
 
   const [{ assets }, collectionsItems, regionsItems] = await Promise.all([
     cockpit.assets(), 
@@ -34,10 +35,10 @@ exports.sourceNodes = async ({
 
   assets.forEach(asset => asset.path = host + '/storage/uploads' + asset.path);
 
-  exports.collectionsItems = collectionsItems;
-  exports.regionsItems = regionsItems;
-  exports.collectionsNames = collectionNames;
- 
+  itemsStore.set('collectionsItems', collectionsItems);
+  itemsStore.set('regionsItems', regionsItems);
+  itemsStore.set('collectionsNames', collectionsNames);
+
   const assetMapHelpers = new AssetMapHelpers({
     assets,
     store,
