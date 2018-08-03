@@ -1,5 +1,4 @@
-const GraphQLJSON = require('graphql-type-json');
-const gatsbyNode = require('./gatsby-node');
+const { GraphQLJSON } = require('gatsby/graphql');
 const { singular } = require('pluralize');
 const styler = require('react-styling');
 const sanitizeHtml = require('sanitize-html');
