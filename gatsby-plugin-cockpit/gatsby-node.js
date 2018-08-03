@@ -3,7 +3,7 @@ const { AssetMapHelpers, CockpitHelpers, CreateNodesHelpers } = require('./helpe
 const extendNodeType = require('./extend-node-type');
 
 exports.sourceNodes = async ({
-  boundActionCreators: { createNode },
+  actions: { createNode },
   store,
   cache,
 }, pluginOptions) => {
